@@ -158,3 +158,15 @@ Quick-reference tables for code organization, testing, CI/CD, and deployment pat
 8. **Logging**: Write to Delta tables for persistent audit trails; use structured logging
 9. **Error Handling**: Fail fast with validation, catch exceptions, and alert on failures
 10. **Deployment**: Databricks Asset Bundles or Terraform for infrastructure as code
+
+---
+
+## Official Documentation
+
+- [Databricks CLI](https://docs.databricks.com/dev-tools/cli/index.html)
+- [Databricks Secrets](https://docs.databricks.com/security/secrets/index.html)
+- [Databricks Repos (Git Integration)](https://docs.databricks.com/repos/index.html)
+- [Databricks Asset Bundles](https://docs.databricks.com/dev-tools/bundles/index.html)
+- [Python Modules in Databricks](https://docs.databricks.com/libraries/notebooks-python-libraries.html)
+- [CI/CD on Databricks](https://docs.databricks.com/dev-tools/ci-cd/index.html)
+- [Testing on Databricks](https://docs.databricks.com/dev-tools/databricks-utils.html)

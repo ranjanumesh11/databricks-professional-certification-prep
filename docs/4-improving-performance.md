@@ -68,3 +68,13 @@ Quick-reference tables for Python UDFs, vectorization, and performance optimizat
 4. **Type Safety**: Pandas UDFs require explicit type hints and return type specifications
 5. **Registration**: UDFs must be registered with `spark.udf.register()` to be used in SQL
 6. **Performance**: Minimize data movement, use broadcast joins, filter early, and select only needed columns
+
+---
+
+## Official Documentation
+
+- [Pandas UDFs (Vectorized UDFs)](https://spark.apache.org/docs/latest/api/python/user_guide/sql/arrow_pandas.html)
+- [PySpark SQL Functions](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/functions.html)
+- [Apache Arrow and Spark](https://arrow.apache.org/docs/python/apache_spark.html)
+- [Spark Performance Tuning Guide](https://spark.apache.org/docs/latest/sql-performance-tuning.html)
+- [UDF Best Practices](https://docs.databricks.com/udf/python.html)

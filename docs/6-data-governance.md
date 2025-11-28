@@ -108,3 +108,14 @@ Quick-reference tables for data privacy, access control, and regulatory complian
 5. **Row-Level Security**: Filter rows dynamically based on user attributes and group membership
 6. **Compliance Windows**: Use deadline columns to track regulatory timelines (e.g., 30-day GDPR deletion)
 7. **Audit Trail**: Leverage DESCRIBE HISTORY and CDF for immutable change logs
+
+---
+
+## Official Documentation
+
+- [Delta Lake Time Travel](https://docs.delta.io/latest/delta-batch.html#deltatimetravel)
+- [Delta Lake Change Data Feed](https://docs.delta.io/latest/delta-change-data-feed.html)
+- [Unity Catalog Row and Column Filters](https://docs.databricks.com/data-governance/unity-catalog/row-and-column-filters.html)
+- [Delta Lake Table Properties](https://docs.delta.io/latest/table-properties.html)
+- [Data Governance with Unity Catalog](https://docs.databricks.com/data-governance/unity-catalog/index.html)
+- [GDPR Compliance Patterns](https://docs.databricks.com/security/privacy/gdpr-delta.html)

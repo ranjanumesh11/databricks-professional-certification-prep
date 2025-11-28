@@ -88,3 +88,13 @@ Quick-reference tables for multi-task jobs, task dependencies, and workflow orch
 5. **Error Handling**: Configure retries, timeouts, and alerts for robust pipelines
 6. **Job Repair**: Re-run only failed tasks without re-executing successful ones
 7. **Integration**: Use Jobs API for CI/CD and external orchestration tools
+
+---
+
+## Official Documentation
+
+- [Databricks Jobs and Workflows](https://docs.databricks.com/workflows/jobs/jobs.html)
+- [Task Orchestration](https://docs.databricks.com/workflows/jobs/create-run-jobs.html)
+- [Jobs API Reference](https://docs.databricks.com/api/workspace/jobs)
+- [dbutils.widgets](https://docs.databricks.com/dev-tools/databricks-utils.html#widgets-utility-dbutilswidgets)
+- [Databricks Notebooks](https://docs.databricks.com/notebooks/index.html)

@@ -143,3 +143,14 @@ Quick-reference tables for DLT pipelines, data quality, and incremental processi
 6. **Materialized Views**: Batch-processed, fully refreshed; use for aggregations
 7. **Quarantine Pattern**: Separate tables for valid and invalid records using inverse expectations
 8. **Development Mode**: Fast iteration with schema inference; switch to Production for performance
+
+---
+
+## Official Documentation
+
+- [Delta Live Tables Documentation](https://docs.databricks.com/delta-live-tables/index.html)
+- [DLT Expectations (Data Quality)](https://docs.databricks.com/delta-live-tables/expectations.html)
+- [Auto Loader with DLT](https://docs.databricks.com/ingestion/auto-loader/index.html)
+- [DLT CDC with apply_changes](https://docs.databricks.com/delta-live-tables/cdc.html)
+- [DLT Python API Reference](https://docs.databricks.com/delta-live-tables/python-ref.html)
+- [DLT Pipeline Configuration](https://docs.databricks.com/delta-live-tables/configure-pipeline.html)

@@ -70,3 +70,13 @@ Quick-reference tables for streaming data processing, CDC, and joins.
 3. **foreachBatch Pattern**: Enables full DataFrame API (including window functions) on streaming data by processing micro-batches
 4. **MERGE Statement**: Standard pattern for upserts; supports conditional logic for complex CDC scenarios
 5. **Broadcast Joins**: Optimize stream-static joins by broadcasting small lookup tables to all workers
+
+---
+
+## Official Documentation
+
+- [Delta Lake Change Data Feed](https://docs.delta.io/latest/delta-change-data-feed.html)
+- [Structured Streaming Programming Guide](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
+- [Delta Lake MERGE Operations](https://docs.delta.io/latest/delta-update.html#merge)
+- [Spark Structured Streaming + Kafka Integration](https://spark.apache.org/docs/latest/structured-streaming-kafka-integration.html)
+- [PySpark Streaming Functions](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/functions.html)
