@@ -53,3 +53,35 @@
     padding: 0.45rem 0.6rem;
   }
 }
+
+/* Narrow the left navigation and right TOC to give main content more room */
+.md-sidebar,
+.md-nav--primary,
+.md-nav {
+  flex: 0 0 220px !important;
+  max-width: 220px !important;
+}
+
+/* Right-hand table of contents / toc */
+.md-content__toc,
+.md-toc,
+.md-sidebar--secondary {
+  flex: 0 0 220px !important;
+  max-width: 220px !important;
+}
+
+/* Increase overall container width so content can expand */
+.md-container {
+  max-width: 1400px !important;
+}
+
+/* Make the content column expand to use remaining space */
+.md-main {
+  min-width: 0;
+}
+
+/* Ensure code blocks within tables and details wrap properly */
+details pre, .md-content pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -1,5 +1,6 @@
 # Section 2 — Data Modeling
 
+
 Below are two concise reference sections followed by the detailed notebook explanations (theory and hands-on checklist). The first section is a high-level summary grouped by area (Databricks, Spark, Python, SQL). The second is a command/operator quick-reference table that shows syntax used in this course and a few useful extras marked with an asterisk (*).
 
 ---
