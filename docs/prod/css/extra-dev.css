@@ -1,0 +1,36 @@
+/* Dev-only: minimal, scoped fixes for table rendering and code wrapping.
+   This file avoids changing layout or sidebar sizes. Only targets
+   tables, code elements and details blocks to prevent the previous full-page break.
+*/
+
+/* Make tables use auto layout so long text wraps naturally */
+.md-content table {
+  width: 100%;
+  table-layout: auto;
+  word-break: break-word;
+}
+
+/* Add subtle wrapping for long inline code inside table cells */
+.md-content td code,
+.md-content th code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Prevent code blocks from overflowing table cells */
+.md-content td pre,
+.md-content th pre {
+  white-space: pre-wrap;
+  overflow: auto;
+  max-width: 100%;
+}
+
+/* Keep details summary tidy without changing widths */
+details summary {
+  cursor: pointer;
+}
+
+details p, details li {
+  white-space: normal;
+}
