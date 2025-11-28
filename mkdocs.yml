@@ -15,6 +15,10 @@ theme:
     text: Roboto
     code: Roboto Mono
 
+# Dev-only custom CSS will be active on the `dev` branch. This file is
+# intentionally scoped to tables and code wrapping only.
+extra_css:
+  - css/extra-dev.css
 # Add custom CSS to control content width and table styling
 
 
@@ -24,3 +28,4 @@ markdown_extensions:
       permalink: true
   - pymdownx.superfences
   - pymdownx.tabbed
+  - pymdownx.details
