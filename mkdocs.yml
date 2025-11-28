@@ -16,8 +16,7 @@ theme:
     code: Roboto Mono
 
 # Add custom CSS to control content width and table styling
-extra_css:
-  - css/extra.css
+
 
 markdown_extensions:
   - admonition
