@@ -1,9 +1,15 @@
 site_name: Databricks Professional Certification Prep
-site_description: Short docs for the Databricks training repo (Section 2 highlighted)
+site_description: Concise study materials for Databricks Certified Data Engineer Professional exam
 
 nav:
   - Home: index.md
   - "Section 2 — Data Modeling": 2-data-modeling.md
+  - "Section 3 — Data Processing": 3-data-processing.md
+  - "Section 4 — Improving Performance": 4-improving-performance.md
+  - "Section 5 — Data Orchestration": 5-data-orchestration.md
+  - "Section 6 — Data Governance": 6-data-governance.md
+  - "Section 7 — Delta Live Tables": 7-dlt-pipelines.md
+  - "Section 8 — Testing & Deployment": 8-testing-deployment.md
 
 theme:
   name: material
