@@ -385,6 +385,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#delta-lake-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Lake Optimization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#key-concepts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -403,6 +414,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Official Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#udfs-vectorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UDFs &amp; Vectorization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-lake-optimization_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Lake Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -571,6 +610,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#delta-lake-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Lake Optimization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#key-concepts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -589,6 +639,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Official Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#udfs-vectorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UDFs &amp; Vectorization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-lake-optimization_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Lake Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -829,6 +907,320 @@
 </table>
 </details>
 <hr />
+<h2 id="delta-lake-optimization">Delta Lake Optimization<a class="headerlink" href="#delta-lake-optimization" title="Permanent link">&para;</a></h2>
+<details class="note">
+<summary>Table Partitioning</summary>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Create Partitioned Table</strong></td>
+<td><code>CREATE TABLE table PARTITIONED BY (col1, col2)</code></td>
+<td>Physical separation into subdirectories</td>
+<td>Use for very large tables with low-cardinality columns</td>
+</tr>
+<tr>
+<td><strong>Partition Columns</strong></td>
+<td>Common: date/time, region, category</td>
+<td>Choose based on query filters</td>
+<td>Avoid high-cardinality columns (user_id, transaction_id)</td>
+</tr>
+<tr>
+<td><strong>Directory Structure</strong></td>
+<td><code>table_location/col1=value1/col2=value2/</code></td>
+<td>Hierarchical folder layout</td>
+<td>Enables partition-level access control</td>
+</tr>
+<tr>
+<td><strong>Partition Pruning</strong></td>
+<td><code>WHERE date = '2023-01-01'</code></td>
+<td>Skip entire partitions</td>
+<td>Query optimizer uses partition filters</td>
+</tr>
+<tr>
+<td><strong>Trade-offs</strong></td>
+<td>Small files per partition, rigid schema</td>
+<td>Not ideal for small/medium tables</td>
+<td>OPTIMIZE only runs per partition</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Z-Order Indexing</summary>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enable Z-Ordering</strong></td>
+<td><code>OPTIMIZE table ZORDER BY (col1, col2)</code></td>
+<td>Co-locate column data in files</td>
+<td>No subdirectories created</td>
+</tr>
+<tr>
+<td><strong>Data Co-location</strong></td>
+<td>Groups similar values together</td>
+<td>Example: ID 1-50 in file1, 51-100 in file2</td>
+<td>Improves data skipping efficiency</td>
+</tr>
+<tr>
+<td><strong>Multi-column</strong></td>
+<td><code>ZORDER BY (customer_id, order_date)</code></td>
+<td>Optimize for multiple filters</td>
+<td>Order matters; choose most selective first</td>
+</tr>
+<tr>
+<td><strong>Non-incremental</strong></td>
+<td>Must rerun on new data</td>
+<td>Full table reorganization</td>
+<td>Can be expensive for frequent updates</td>
+</tr>
+<tr>
+<td><strong>File Statistics</strong></td>
+<td>Min/max values per file</td>
+<td>Query planner skips irrelevant files</td>
+<td>Leveraged automatically by Delta Lake</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Liquid Clustering</summary>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Create Clustered Table</strong></td>
+<td><code>CREATE TABLE table CLUSTER BY (col1, col2)</code></td>
+<td>Define clustering at table level</td>
+<td>Modern replacement for Z-order</td>
+</tr>
+<tr>
+<td><strong>Alter Existing Table</strong></td>
+<td><code>ALTER TABLE table CLUSTER BY (col1, col2)</code></td>
+<td>Add clustering to existing table</td>
+<td>No data rewrite required</td>
+</tr>
+<tr>
+<td><strong>Trigger Clustering</strong></td>
+<td><code>OPTIMIZE table</code></td>
+<td>Compact and cluster files</td>
+<td>Incremental operation; only processes new data</td>
+</tr>
+<tr>
+<td><strong>Redefine Keys</strong></td>
+<td><code>ALTER TABLE table CLUSTER BY (new_cols)</code></td>
+<td>Change clustering columns</td>
+<td>Adapts to evolving query patterns</td>
+</tr>
+<tr>
+<td><strong>Automatic Clustering</strong></td>
+<td><code>CREATE TABLE table CLUSTER BY AUTO</code></td>
+<td>Databricks chooses keys</td>
+<td>Requires Predictive Optimization enabled</td>
+</tr>
+<tr>
+<td><strong>Advantages</strong></td>
+<td>Incremental, flexible, efficient</td>
+<td>Smart optimization</td>
+<td>Only rewrites unoptimized files</td>
+</tr>
+<tr>
+<td><strong>Key Selection</strong></td>
+<td>Based on query filters</td>
+<td>Analyze <code>WHERE</code> clause patterns</td>
+<td>Use frequently filtered columns</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Transaction Log &amp; Checkpoints</summary>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Details</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Transaction Log</strong></td>
+<td><code>_delta_log/</code> directory with JSON files</td>
+<td>Records all table operations</td>
+<td>Each commit = one JSON file</td>
+</tr>
+<tr>
+<td><strong>Checkpoint Files</strong></td>
+<td>Parquet files every 10 commits</td>
+<td>Snapshot of entire table state</td>
+<td>Faster than reading many JSONs</td>
+</tr>
+<tr>
+<td><strong>File Statistics</strong></td>
+<td>Min, max, nullCount per column</td>
+<td>Captured per data file</td>
+<td>Limited to first 32 columns</td>
+</tr>
+<tr>
+<td><strong>Log Retention</strong></td>
+<td>Default: 30 days</td>
+<td>Controls time travel window</td>
+<td>Set via <code>delta.logRetentionDuration</code></td>
+</tr>
+<tr>
+<td><strong>Statistics Columns</strong></td>
+<td><code>numRecords</code>, <code>minValues</code>, <code>maxValues</code></td>
+<td>Per-file metadata</td>
+<td>Used for data skipping</td>
+</tr>
+<tr>
+<td><strong>Data Skipping</strong></td>
+<td>Automatic file pruning</td>
+<td>Query optimizer uses statistics</td>
+<td>No configuration needed</td>
+</tr>
+<tr>
+<td><strong>Nested Fields</strong></td>
+<td>Count toward 32-column limit</td>
+<td>Struct with 8 fields = 8 columns</td>
+<td>Order schema for important columns first</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Auto Optimize</summary>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Configuration</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Optimized Writes</strong></td>
+<td><code>delta.autoOptimize.optimizeWrite = true</code></td>
+<td>Write 128MB files per partition</td>
+<td>Happens during write operation</td>
+</tr>
+<tr>
+<td><strong>Auto Compaction</strong></td>
+<td><code>delta.autoOptimize.autoCompact = true</code></td>
+<td>Compact after write completes</td>
+<td>128MB target (not 1GB like manual OPTIMIZE)</td>
+</tr>
+<tr>
+<td><strong>Table Properties</strong></td>
+<td>Set on <code>CREATE TABLE</code> or <code>ALTER TABLE</code></td>
+<td>Enable per table</td>
+<td>Can override per session</td>
+</tr>
+<tr>
+<td><strong>Session Config</strong></td>
+<td><code>spark.databricks.delta.optimizeWrite.enabled</code></td>
+<td>Enable for session</td>
+<td>Takes precedence over table properties</td>
+</tr>
+<tr>
+<td><strong>Auto Tuning</strong></td>
+<td>Adjusts file size for merge patterns</td>
+<td>Smaller files for frequent merges</td>
+<td>Reduces merge operation duration</td>
+</tr>
+<tr>
+<td><strong>Z-Order Limitation</strong></td>
+<td>Auto compaction doesn't support Z-order</td>
+<td>Use manual OPTIMIZE for Z-order</td>
+<td>Z-ordering is more expensive</td>
+</tr>
+<tr>
+<td><strong>When to Use</strong></td>
+<td>Streaming writes, frequent small batches</td>
+<td>Reduces small file problem</td>
+<td>Trade-off: slower writes for better reads</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Manual Optimization Commands</summary>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Syntax</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Basic OPTIMIZE</strong></td>
+<td><code>OPTIMIZE table</code></td>
+<td>Compact small files</td>
+<td>Target: 1GB files</td>
+</tr>
+<tr>
+<td><strong>OPTIMIZE with Z-Order</strong></td>
+<td><code>OPTIMIZE table ZORDER BY (col1, col2)</code></td>
+<td>Compact + co-locate data</td>
+<td>Computationally expensive</td>
+</tr>
+<tr>
+<td><strong>VACUUM</strong></td>
+<td><code>VACUUM table [RETAIN hours]</code></td>
+<td>Delete old data files</td>
+<td>Default: 7 days retention</td>
+</tr>
+<tr>
+<td><strong>DESCRIBE HISTORY</strong></td>
+<td><code>DESCRIBE HISTORY table</code></td>
+<td>View transaction log</td>
+<td>Shows commits, operations, versions</td>
+</tr>
+<tr>
+<td><strong>DESCRIBE DETAIL</strong></td>
+<td><code>DESCRIBE DETAIL table</code></td>
+<td>Table metadata</td>
+<td>Location, format, partitioning</td>
+</tr>
+<tr>
+<td><strong>ANALYZE TABLE</strong></td>
+<td><code>ANALYZE TABLE table COMPUTE STATISTICS</code></td>
+<td>Update table statistics</td>
+<td>Usually automatic in Delta Lake</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr />
 <h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Standard UDFs</strong>: Row-by-row processing with high serialization overhead; avoid when possible</li>
@@ -837,15 +1229,32 @@
 <li><strong>Type Safety</strong>: Pandas UDFs require explicit type hints and return type specifications</li>
 <li><strong>Registration</strong>: UDFs must be registered with <code>spark.udf.register()</code> to be used in SQL</li>
 <li><strong>Performance</strong>: Minimize data movement, use broadcast joins, filter early, and select only needed columns</li>
+<li><strong>Partitioning</strong>: Use for very large tables with low-cardinality partition columns; creates subdirectories</li>
+<li><strong>Z-Order Indexing</strong>: Co-locates data without subdirectories; non-incremental, requires full rerun</li>
+<li><strong>Liquid Clustering</strong>: Modern, incremental, flexible clustering; adapts to query patterns</li>
+<li><strong>Transaction Log</strong>: JSON files record operations; checkpoint every 10 commits for fast state resolution</li>
+<li><strong>File Statistics</strong>: Min/max/nullCount per column enables automatic data skipping</li>
+<li><strong>Auto Optimize</strong>: Optimized writes (128MB files) + auto compaction; reduces small file problem</li>
 </ol>
 <hr />
 <h2 id="official-documentation">Official Documentation<a class="headerlink" href="#official-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="udfs-vectorization">UDFs &amp; Vectorization<a class="headerlink" href="#udfs-vectorization" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://spark.apache.org/docs/latest/api/python/user_guide/sql/arrow_pandas.html">Pandas UDFs (Vectorized UDFs)</a></li>
 <li><a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/functions.html">PySpark SQL Functions</a></li>
 <li><a href="https://arrow.apache.org/docs/python/apache_spark.html">Apache Arrow and Spark</a></li>
 <li><a href="https://spark.apache.org/docs/latest/sql-performance-tuning.html">Spark Performance Tuning Guide</a></li>
 <li><a href="https://docs.databricks.com/udf/python.html">UDF Best Practices</a></li>
+</ul>
+<h3 id="delta-lake-optimization_1">Delta Lake Optimization<a class="headerlink" href="#delta-lake-optimization_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://docs.delta.io/latest/optimizations-oss.html">Delta Lake Optimize</a></li>
+<li><a href="https://docs.databricks.com/delta/data-skipping.html">Z-Order Clustering</a></li>
+<li><a href="https://docs.databricks.com/delta/clustering.html">Liquid Clustering</a></li>
+<li><a href="https://docs.databricks.com/delta/tune-file-size.html">Auto Optimize</a></li>
+<li><a href="https://docs.databricks.com/delta/delta-intro.html#transaction-log">Delta Lake Transaction Log</a></li>
+<li><a href="https://docs.databricks.com/optimizations/predictive-optimization.html">Predictive Optimization</a></li>
+<li><a href="https://docs.databricks.com/tables/partitions.html">Table Partitioning</a></li>
 </ul>
 
 
