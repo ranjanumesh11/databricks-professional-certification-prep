@@ -15,10 +15,8 @@ theme:
     text: Roboto
     code: Roboto Mono
 
-# Dev-only custom CSS is kept in `docs/css/extra-dev.css` and should be
-# enabled only on the `dev` branch. Do NOT reference it here to avoid
-# applying dev-only styles to the production site.
-
+extra_css:
+  - css/extra-dev.css
 
 markdown_extensions:
   - admonition
