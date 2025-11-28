@@ -28,3 +28,4 @@ markdown_extensions:
       permalink: true
   - pymdownx.superfences
   - pymdownx.tabbed
+  - pymdownx.details
