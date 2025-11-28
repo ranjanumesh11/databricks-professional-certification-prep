@@ -1,0 +1,848 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Short docs for the Databricks training repo (Section 2 highlighted)">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Section 2 — Data Modeling - Databricks Professional Certification Prep</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-2-data-modeling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Databricks Professional Certification Prep" class="md-header__button md-logo" aria-label="Databricks Professional Certification Prep" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Databricks Professional Certification Prep
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Section 2 — Data Modeling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Databricks Professional Certification Prep" class="md-nav__button md-logo" aria-label="Databricks Professional Certification Prep" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Databricks Professional Certification Prep
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 2 — Data Modeling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 2 — Data Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-high-level-concepts-by-area-short-bullets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) High-level concepts (by area) — short bullets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1) High-level concepts (by area) — short bullets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#databricks-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks-specific
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spark-pyspark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spark / PySpark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL / Delta
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-quick-commands-syntax-reference-grouped-by-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Quick commands &amp; syntax reference (grouped by area)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2) Quick commands &amp; syntax reference (grouped by area)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-autoloader-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short Autoloader example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-where-to-read-official-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Where to read (official docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-high-level-concepts-by-area-short-bullets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) High-level concepts (by area) — short bullets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1) High-level concepts (by area) — short bullets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#databricks-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks-specific
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spark-pyspark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spark / PySpark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL / Delta
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-quick-commands-syntax-reference-grouped-by-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Quick commands &amp; syntax reference (grouped by area)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2) Quick commands &amp; syntax reference (grouped by area)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-autoloader-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short Autoloader example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-where-to-read-official-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Where to read (official docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="section-2-data-modeling">Section 2 — Data Modeling<a class="headerlink" href="#section-2-data-modeling" title="Permanent link">&para;</a></h1>
+<p>Below are two concise reference sections followed by the detailed notebook explanations (theory and hands-on checklist). The first section is a high-level summary grouped by area (Databricks, Spark, Python, SQL). The second is a command/operator quick-reference table that shows syntax used in this course and a few useful extras marked with an asterisk (*).</p>
+<hr />
+<h2 id="1-high-level-concepts-by-area-short-bullets">1) High-level concepts (by area) — short bullets<a class="headerlink" href="#1-high-level-concepts-by-area-short-bullets" title="Permanent link">&para;</a></h2>
+<h3 id="databricks-specific">Databricks-specific<a class="headerlink" href="#databricks-specific" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Autoloader (cloudFiles): incremental file ingestion for cloud storage (used to stream JSON files into Bronze). Doc: https://docs.databricks.com/data-engineering/ingestion/auto-loader/index.html</li>
+<li><code>availableNow</code> trigger: bounded processing of all currently-available files (demo/backfill). Doc: https://docs.databricks.com/data-engineering/ingestion/auto-loader/cloud-files-trigger.html</li>
+<li>Databricks Volumes / Unity Catalog: managed storage and cataloging for datasets. Doc: https://docs.databricks.com/data-governance/unity-catalog/index.html</li>
+<li><code>dbutils.fs</code>: workspace filesystem utilities (ls, cp, rm). Doc: https://docs.databricks.com/dev-tools/databricks-utils.html</li>
+</ul>
+<h3 id="spark-pyspark">Spark / PySpark<a class="headerlink" href="#spark-pyspark" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Structured Streaming: <code>readStream</code> / <code>writeStream</code>, watermarking, triggers, <code>foreachBatch</code>. Docs: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html</li>
+<li>DataFrame APIs: <code>from_json</code>, <code>withColumn</code>, <code>cast</code>, <code>date_format</code>, <code>dropDuplicates</code>, <code>withWatermark</code>. Docs: https://spark.apache.org/docs/latest/api/python/</li>
+<li>Window functions and broadcast joins for dedup/enrichment. Docs: https://spark.apache.org/docs/latest/api/python/</li>
+</ul>
+<h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Core language constructs used: classes (<code>__init__</code>, <code>self</code>), lists/dicts/sets, f-strings, try/except, helper functions. Python stdlib reference: https://docs.python.org/3/library/stdtypes.html</li>
+</ul>
+<h3 id="sql-delta">SQL / Delta<a class="headerlink" href="#sql-delta" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Delta Lake <code>MERGE</code> for upserts and Type-2 SCD patterns. Docs: https://docs.delta.io/latest/delta-update.html#merge</li>
+<li>Managed Delta tables via <code>.table("name")</code> sink and <code>mergeSchema</code> option.</li>
+</ul>
+<hr />
+<h2 id="2-quick-commands-syntax-reference-grouped-by-area">2) Quick commands &amp; syntax reference (grouped by area)<a class="headerlink" href="#2-quick-commands-syntax-reference-grouped-by-area" title="Permanent link">&para;</a></h2>
+<p>Notes: To improve readability this section is split into small tables per area (Databricks, PySpark, SQL/Delta, Python). Items are numbered and options or sub-settings appear as indented sub-items (e.g. <code>1.1</code>).</p>
+<details class="note">
+<summary>Databricks (1) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 — Autoloader</td>
+<td><code>spark.readStream.format("cloudFiles").option("cloudFiles.format","json").load(path)</code></td>
+<td>used to ingest <code>kafka-raw</code> -&gt; streaming DF</td>
+<td>Extra options listed below (1.1, 1.2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">1.1 — Autoloader option</td>
+<td><code>.option("cloudFiles.format","json")</code></td>
+<td>specify payload format</td>
+<td>common: <code>json</code>, <code>parquet</code>, <code>csv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1.2 — Autoloader notifications*</td>
+<td><code>.option("cloudFiles.useNotifications","true")</code></td>
+<td>use S3 notifications to lower list cost</td>
+<td>*Requires configuration of cloud events</td>
+</tr>
+<tr>
+<td style="text-align: right;">2 — Trigger</td>
+<td><code>.trigger(availableNow=True)</code></td>
+<td>used in <code>process_bronze()</code> to process available files and stop</td>
+<td>Alternative: <code>.trigger(processingTime='10 seconds')</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">3 — Checkpointing</td>
+<td><code>.option("checkpointLocation", checkpoint_path)</code></td>
+<td>required on writeStream for progress tracking</td>
+<td>ensure stable storage; use unique path per query</td>
+</tr>
+<tr>
+<td style="text-align: right;">4 — Partitioning (write)</td>
+<td><code>.partitionBy("topic","year_month")</code></td>
+<td>write partitioned Delta table</td>
+<td>partitions improve read performance; avoid small partitions</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 — Delta write options</td>
+<td><code>.option("mergeSchema", True).table("bronze")</code></td>
+<td>allow schema evolution on sink</td>
+<td>Extra: <code>.mode("append")</code>, <code>format("delta")</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">6 — dbutils helpers</td>
+<td><code>dbutils.fs.ls(path)</code>, <code>dbutils.fs.cp(src,dst)</code>, <code>dbutils.fs.rm(path, True)</code></td>
+<td>copy and list dataset files (Copy-Datasets uses these)</td>
+<td>DBFS vs <code>/Volumes/...</code> differences by catalog</td>
+</tr>
+</tbody>
+</table>
+<h4 id="short-autoloader-example">Short Autoloader example<a class="headerlink" href="#short-autoloader-example" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Autoloader: read JSON files incrementally from cloud storage</span>
+<span class="n">autoloader_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;cloudFiles&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;cloudFiles.format&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">schema</span><span class="p">(</span><span class="s2">&quot;key BINARY, value BINARY, topic STRING, partition LONG, offset LONG, timestamp LONG&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bookstore</span><span class="o">.</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">/kafka-raw&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Cast value to string and parse later with from_json in downstream processing</span>
+<span class="n">autoloader_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">autoloader_df</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;value_text&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>Spark / PySpark (2) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2.1 — Streaming read</td>
+<td><code>spark.readStream.table("bronze")</code></td>
+<td>read Bronze as streaming source</td>
+<td>can also use <code>format("delta")</code> + <code>.load(path)</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">2.2 — JSON parsing</td>
+<td><code>F.from_json(F.col("value").cast("string"), json_schema)</code></td>
+<td>parse message payloads into struct</td>
+<td><code>from_json</code> returns Struct; use <code>.select("v.*")</code> to expand</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.3 — Timestamp handling</td>
+<td><code>.withColumn("timestamp", (F.col("timestamp")/1000).cast("timestamp"))</code></td>
+<td>convert epoch ms -&gt; timestamp</td>
+<td>or use <code>to_timestamp</code> on string values</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.4 — Partition key</td>
+<td><code>F.date_format("timestamp","yyyy-MM")</code></td>
+<td>derive <code>year_month</code> partition column</td>
+<td>common for time-partitioning</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.5 — Watermarking</td>
+<td><code>.withWatermark("order_timestamp","30 seconds")</code></td>
+<td>used for dedup state cleanup</td>
+<td>choose watermark based on expected lateness</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.6 — Deduplication</td>
+<td><code>.dropDuplicates(["order_id","order_timestamp"])</code></td>
+<td>remove duplicates in stream (with watermark)</td>
+<td><code>dropDuplicates</code> is stateful; watch memory</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.7 — foreachBatch</td>
+<td><code>.writeStream.foreachBatch(func).option("checkpointLocation", ...).start()</code></td>
+<td>used to call upsert functions per micro-batch</td>
+<td><code>func(microBatchDF, batchId)</code> — use <code>MERGE</code> inside func</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.8 — Window &amp; rank</td>
+<td><code>Window.partitionBy(...).orderBy(F.col(...).desc())</code> and <code>F.rank()</code></td>
+<td>used in <code>upsert_customers_batch</code> for latest row selection</td>
+<td>Window functions are powerful for dedupe &amp; SCD logic</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.9 — Broadcast join</td>
+<td><code>F.broadcast(df_small)</code></td>
+<td>used to enrich customers with country lookup</td>
+<td>use for small static tables to avoid shuffle</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.10 — Spark actions</td>
+<td><code>df.collect()</code> / <code>df.first()</code> / <code>df.take(n)</code></td>
+<td>used to read small results to driver</td>
+<td>Prefer <code>first()</code> / <code>take(1)</code> over <code>collect()</code> for single-row reads</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>SQL / Delta (3) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">3.1 — MERGE (Delta)</td>
+<td><code>MERGE INTO target USING source ON &lt;cond&gt; WHEN MATCHED THEN UPDATE ... WHEN NOT MATCHED THEN INSERT ...</code></td>
+<td>used for upserts &amp; Type-2 SCD</td>
+<td>Delta support for <code>MERGE</code> SQL; essential for exam</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Python (4) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4.1 — Basics</td>
+<td><code>class</code>, <code>__init__</code>, <code>self</code>, <code>list.append()</code>, <code>dict</code></td>
+<td><code>Copy-Datasets</code> creates <code>CourseDataset</code> instance and calls methods</td>
+<td><code>__init__</code> initializes attributes; avoid heavy I/O in constructor</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr />
+<h2 id="3-where-to-read-official-docs">3) Where to read (official docs)<a class="headerlink" href="#3-where-to-read-official-docs" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Databricks Autoloader: https://docs.databricks.com/data-engineering/ingestion/auto-loader/index.html</li>
+<li>Databricks <code>dbutils</code>: https://docs.databricks.com/dev-tools/databricks-utils.html</li>
+<li>Databricks Unity Catalog &amp; Volumes: https://docs.databricks.com/data-governance/unity-catalog/index.html</li>
+<li>Spark Structured Streaming guide: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html</li>
+<li>PySpark functions (from_json, date_format, etc): https://spark.apache.org/docs/latest/api/python/</li>
+<li>Delta Lake MERGE &amp; update patterns: https://docs.delta.io/latest/delta-update.html#merge</li>
+<li>Python stdlib (core types): https://docs.python.org/3/library/stdtypes.html</li>
+</ul>
+<hr />
+<!-- Detailed notebook explanations follow (kept from original README) -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
