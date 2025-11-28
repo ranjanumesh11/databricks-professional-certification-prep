@@ -49,6 +49,8 @@
       
     
     
+      <link rel="stylesheet" href="../css/extra-dev.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -374,6 +376,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2) Quick commands &amp; syntax reference (grouped by area)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-autoloader-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short Autoloader example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -491,6 +510,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2) Quick commands &amp; syntax reference (grouped by area)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-autoloader-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short Autoloader example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -550,22 +586,69 @@
 <hr />
 <h2 id="2-quick-commands-syntax-reference-grouped-by-area">2) Quick commands &amp; syntax reference (grouped by area)<a class="headerlink" href="#2-quick-commands-syntax-reference-grouped-by-area" title="Permanent link">&para;</a></h2>
 <p>Notes: To improve readability this section is split into small tables per area (Databricks, PySpark, SQL/Delta, Python). Items are numbered and options or sub-settings appear as indented sub-items (e.g. <code>1.1</code>).</p>
-<details>
-<summary><strong>Databricks (1) — click to expand</strong></summary>
-
-| Item | Command / Operator | Course usage (short) | Notes & extras |
-|---:|---|---|---|
-| 1 — Autoloader | `spark.readStream.format("cloudFiles").option("cloudFiles.format","json").load(path)` | used to ingest `kafka-raw` -> streaming DF | Extra options listed below (1.1, 1.2) |
-| 1.1 — Autoloader option | `.option("cloudFiles.format","json")` | specify payload format | common: `json`, `parquet`, `csv` |
-| 1.2 — Autoloader notifications* | `.option("cloudFiles.useNotifications","true")` | use S3 notifications to lower list cost | *Requires configuration of cloud events |
-| 2 — Trigger | `.trigger(availableNow=True)` | used in `process_bronze()` to process available files and stop | Alternative: `.trigger(processingTime='10 seconds')` |
-| 3 — Checkpointing | `.option("checkpointLocation", checkpoint_path)` | required on writeStream for progress tracking | ensure stable storage; use unique path per query |
-| 4 — Partitioning (write) | `.partitionBy("topic","year_month")` | write partitioned Delta table | partitions improve read performance; avoid small partitions |
-| 5 — Delta write options | `.option("mergeSchema", True).table("bronze")` | allow schema evolution on sink | Extra: `.mode("append")`, `format("delta")` |
-| 6 — dbutils helpers | `dbutils.fs.ls(path)`, `dbutils.fs.cp(src,dst)`, `dbutils.fs.rm(path, True)` | copy and list dataset files (Copy-Datasets uses these) | DBFS vs `/Volumes/...` differences by catalog |
-
-#### Short Autoloader example
-
+<details class="note">
+<summary>Databricks (1) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 — Autoloader</td>
+<td><code>spark.readStream.format("cloudFiles").option("cloudFiles.format","json").load(path)</code></td>
+<td>used to ingest <code>kafka-raw</code> -&gt; streaming DF</td>
+<td>Extra options listed below (1.1, 1.2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">1.1 — Autoloader option</td>
+<td><code>.option("cloudFiles.format","json")</code></td>
+<td>specify payload format</td>
+<td>common: <code>json</code>, <code>parquet</code>, <code>csv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1.2 — Autoloader notifications*</td>
+<td><code>.option("cloudFiles.useNotifications","true")</code></td>
+<td>use S3 notifications to lower list cost</td>
+<td>*Requires configuration of cloud events</td>
+</tr>
+<tr>
+<td style="text-align: right;">2 — Trigger</td>
+<td><code>.trigger(availableNow=True)</code></td>
+<td>used in <code>process_bronze()</code> to process available files and stop</td>
+<td>Alternative: <code>.trigger(processingTime='10 seconds')</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">3 — Checkpointing</td>
+<td><code>.option("checkpointLocation", checkpoint_path)</code></td>
+<td>required on writeStream for progress tracking</td>
+<td>ensure stable storage; use unique path per query</td>
+</tr>
+<tr>
+<td style="text-align: right;">4 — Partitioning (write)</td>
+<td><code>.partitionBy("topic","year_month")</code></td>
+<td>write partitioned Delta table</td>
+<td>partitions improve read performance; avoid small partitions</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 — Delta write options</td>
+<td><code>.option("mergeSchema", True).table("bronze")</code></td>
+<td>allow schema evolution on sink</td>
+<td>Extra: <code>.mode("append")</code>, <code>format("delta")</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">6 — dbutils helpers</td>
+<td><code>dbutils.fs.ls(path)</code>, <code>dbutils.fs.cp(src,dst)</code>, <code>dbutils.fs.rm(path, True)</code></td>
+<td>copy and list dataset files (Copy-Datasets uses these)</td>
+<td>DBFS vs <code>/Volumes/...</code> differences by catalog</td>
+</tr>
+</tbody>
+</table>
+<h4 id="short-autoloader-example">Short Autoloader example<a class="headerlink" href="#short-autoloader-example" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Autoloader: read JSON files incrementally from cloud storage</span>
 <span class="n">autoloader_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;cloudFiles&quot;</span><span class="p">)</span>
@@ -577,45 +660,124 @@
 <span class="c1"># Cast value to string and parse later with from_json in downstream processing</span>
 <span class="n">autoloader_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">autoloader_df</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;value_text&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
-
 </details>
-
-<details>
-<summary><strong>Spark / PySpark (2) — click to expand</strong></summary>
-
-| Item | Command / Operator | Course usage (short) | Notes & extras |
-|---:|---|---|---|
-| 2.1 — Streaming read | `spark.readStream.table("bronze")` | read Bronze as streaming source | can also use `format("delta")` + `.load(path)` |
-| 2.2 — JSON parsing | `F.from_json(F.col("value").cast("string"), json_schema)` | parse message payloads into struct | `from_json` returns Struct; use `.select("v.*")` to expand |
-| 2.3 — Timestamp handling | `.withColumn("timestamp", (F.col("timestamp")/1000).cast("timestamp"))` | convert epoch ms -> timestamp | or use `to_timestamp` on string values |
-| 2.4 — Partition key | `F.date_format("timestamp","yyyy-MM")` | derive `year_month` partition column | common for time-partitioning |
-| 2.5 — Watermarking | `.withWatermark("order_timestamp","30 seconds")` | used for dedup state cleanup | choose watermark based on expected lateness |
-| 2.6 — Deduplication | `.dropDuplicates(["order_id","order_timestamp"])` | remove duplicates in stream (with watermark) | `dropDuplicates` is stateful; watch memory |
-| 2.7 — foreachBatch | `.writeStream.foreachBatch(func).option("checkpointLocation", ...).start()` | used to call upsert functions per micro-batch | `func(microBatchDF, batchId)` — use `MERGE` inside func |
-| 2.8 — Window & rank | `Window.partitionBy(...).orderBy(F.col(...).desc())` and `F.rank()` | used in `upsert_customers_batch` for latest row selection | Window functions are powerful for dedupe & SCD logic |
-| 2.9 — Broadcast join | `F.broadcast(df_small)` | used to enrich customers with country lookup | use for small static tables to avoid shuffle |
-| 2.10 — Spark actions | `df.collect()` / `df.first()` / `df.take(n)` | used to read small results to driver | Prefer `first()` / `take(1)` over `collect()` for single-row reads |
-
+<details class="note">
+<summary>Spark / PySpark (2) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2.1 — Streaming read</td>
+<td><code>spark.readStream.table("bronze")</code></td>
+<td>read Bronze as streaming source</td>
+<td>can also use <code>format("delta")</code> + <code>.load(path)</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">2.2 — JSON parsing</td>
+<td><code>F.from_json(F.col("value").cast("string"), json_schema)</code></td>
+<td>parse message payloads into struct</td>
+<td><code>from_json</code> returns Struct; use <code>.select("v.*")</code> to expand</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.3 — Timestamp handling</td>
+<td><code>.withColumn("timestamp", (F.col("timestamp")/1000).cast("timestamp"))</code></td>
+<td>convert epoch ms -&gt; timestamp</td>
+<td>or use <code>to_timestamp</code> on string values</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.4 — Partition key</td>
+<td><code>F.date_format("timestamp","yyyy-MM")</code></td>
+<td>derive <code>year_month</code> partition column</td>
+<td>common for time-partitioning</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.5 — Watermarking</td>
+<td><code>.withWatermark("order_timestamp","30 seconds")</code></td>
+<td>used for dedup state cleanup</td>
+<td>choose watermark based on expected lateness</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.6 — Deduplication</td>
+<td><code>.dropDuplicates(["order_id","order_timestamp"])</code></td>
+<td>remove duplicates in stream (with watermark)</td>
+<td><code>dropDuplicates</code> is stateful; watch memory</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.7 — foreachBatch</td>
+<td><code>.writeStream.foreachBatch(func).option("checkpointLocation", ...).start()</code></td>
+<td>used to call upsert functions per micro-batch</td>
+<td><code>func(microBatchDF, batchId)</code> — use <code>MERGE</code> inside func</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.8 — Window &amp; rank</td>
+<td><code>Window.partitionBy(...).orderBy(F.col(...).desc())</code> and <code>F.rank()</code></td>
+<td>used in <code>upsert_customers_batch</code> for latest row selection</td>
+<td>Window functions are powerful for dedupe &amp; SCD logic</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.9 — Broadcast join</td>
+<td><code>F.broadcast(df_small)</code></td>
+<td>used to enrich customers with country lookup</td>
+<td>use for small static tables to avoid shuffle</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.10 — Spark actions</td>
+<td><code>df.collect()</code> / <code>df.first()</code> / <code>df.take(n)</code></td>
+<td>used to read small results to driver</td>
+<td>Prefer <code>first()</code> / <code>take(1)</code> over <code>collect()</code> for single-row reads</td>
+</tr>
+</tbody>
+</table>
 </details>
-
-<details>
-<summary><strong>SQL / Delta (3) — click to expand</strong></summary>
-
-| Item | Command / Operator | Course usage (short) | Notes & extras |
-|---:|---|---|---|
-| 3.1 — MERGE (Delta) | `MERGE INTO target USING source ON <cond> WHEN MATCHED THEN UPDATE ... WHEN NOT MATCHED THEN INSERT ...` | used for upserts & Type-2 SCD | Delta support for `MERGE` SQL; essential for exam |
-
+<details class="note">
+<summary>SQL / Delta (3) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">3.1 — MERGE (Delta)</td>
+<td><code>MERGE INTO target USING source ON &lt;cond&gt; WHEN MATCHED THEN UPDATE ... WHEN NOT MATCHED THEN INSERT ...</code></td>
+<td>used for upserts &amp; Type-2 SCD</td>
+<td>Delta support for <code>MERGE</code> SQL; essential for exam</td>
+</tr>
+</tbody>
+</table>
 </details>
-
-<details>
-<summary><strong>Python (4) — click to expand</strong></summary>
-
-| Item | Command / Operator | Course usage (short) | Notes & extras |
-|---:|---|---|---|
-| 4.1 — Basics | `class`, `__init__`, `self`, `list.append()`, `dict` | `Copy-Datasets` creates `CourseDataset` instance and calls methods | `__init__` initializes attributes; avoid heavy I/O in constructor |
-
+<details class="note">
+<summary>Python (4) — click to expand</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Item</th>
+<th>Command / Operator</th>
+<th>Course usage (short)</th>
+<th>Notes &amp; extras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4.1 — Basics</td>
+<td><code>class</code>, <code>__init__</code>, <code>self</code>, <code>list.append()</code>, <code>dict</code></td>
+<td><code>Copy-Datasets</code> creates <code>CourseDataset</code> instance and calls methods</td>
+<td><code>__init__</code> initializes attributes; avoid heavy I/O in constructor</td>
+</tr>
+</tbody>
+</table>
 </details>
-
 <hr />
 <h2 id="3-where-to-read-official-docs">3) Where to read (official docs)<a class="headerlink" href="#3-where-to-read-official-docs" title="Permanent link">&para;</a></h2>
 <ul>
