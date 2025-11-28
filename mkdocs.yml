@@ -1,0 +1,23 @@
+site_name: Databricks Professional Certification Prep
+site_description: Short docs for the Databricks training repo (Section 2 highlighted)
+
+nav:
+  - Home: index.md
+  - "Section 2 — Data Modeling": 2-data-modeling.md
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
