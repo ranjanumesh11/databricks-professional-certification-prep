@@ -3,6 +3,18 @@ from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 import time
 
+# NOTE: The helper methods below use a leading double-underscore (e.g. `__get_index`).
+# Leading double-underscores trigger Python name-mangling: the attribute
+# `__get_index` inside `CourseDataset` becomes `_CourseDataset__get_index` at
+# runtime. This is intended to avoid accidental name collisions with subclasses
+# (it is not true privacy). In most code, a single leading underscore (e.g.
+# `_get_index`) is the idiomatic way to mark an internal/private helper.
+#
+# Short reference links:
+# - Python identifiers & name-mangling: https://docs.python.org/3/reference/lexical_analysis.html#identifiers
+# - PEP8 (conventions for "private" names): https://peps.python.org/pep-0008/
+# - Short explainer on name-mangling: https://docs.python.org/3/tutorial/classes.html#private-variables
+
 # COMMAND ----------
 
 def path_exists(path):
@@ -73,6 +85,11 @@ class CourseDataset:
         print("Done")
 
 
+    # Internal helper: configure dataset & checkpoint directory paths.
+    # This method name starts with __ which triggers name-mangling to
+    # `_CourseDataset__configure_directories`. It's used as an internal helper
+    # and not intended to be part of the public API. For most projects prefer
+    # a single leading underscore (e.g. `_configure_directories`).
     def __configure_directories(self):
         dataset_volume_name = "dataset"
         checkpoints_volume_name = "checkpoints"
@@ -88,6 +105,9 @@ class CourseDataset:
             spark.sql(f"CREATE VOLUME IF NOT EXISTS {dataset_volume_name}")
             spark.sql(f"CREATE VOLUME IF NOT EXISTS {checkpoints_volume_name}")
     
+    # Internal helper: determine the next numeric index to load.
+    # Name-mangled to `_CourseDataset__get_index` at runtime. Call inside the
+    # class uses `self.__get_index(...)` which Python rewrites the same way.
     def __get_index(self, dir):
         try:
             files = dbutils.fs.ls(dir)
@@ -98,6 +118,8 @@ class CourseDataset:
         return index+1
     
     
+    # Internal helper: copy a single numbered JSON file from streaming -> raw.
+    # Mangled name: `_CourseDataset__load_json_file`.
     def __load_json_file(self, current_index, streaming_dir, raw_dir):
         latest_file = f"{str(current_index).zfill(2)}.json"
         source = f"{streaming_dir}/{latest_file}"
@@ -108,6 +130,9 @@ class CourseDataset:
             dbutils.fs.cp(source, target)
     
     
+    # Internal helper: load one or more files up to `max` using `__get_index`.
+    # Mangled name: `_CourseDataset__load_data`.
+    # If you prefer the simpler convention, rename to `_load_data`.
     def __load_data(self, max, streaming_dir, raw_dir, all=False):
         index = self.__get_index(raw_dir)
         if index > max:
