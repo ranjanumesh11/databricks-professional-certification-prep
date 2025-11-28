@@ -15,11 +15,9 @@ theme:
     text: Roboto
     code: Roboto Mono
 
-# Dev-only custom CSS will be active on the `dev` branch. This file is
-# intentionally scoped to tables and code wrapping only.
-extra_css:
-  - css/extra-dev.css
-# Add custom CSS to control content width and table styling
+# Dev-only custom CSS is kept in `docs/css/extra-dev.css` and should be
+# enabled only on the `dev` branch. Do NOT reference it here to avoid
+# applying dev-only styles to the production site.
 
 
 markdown_extensions:
