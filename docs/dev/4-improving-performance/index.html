@@ -1,0 +1,875 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Concise study materials for Databricks Certified Data Engineer Professional exam">
+      
+      
+      
+      
+        <link rel="prev" href="../3-data-processing/">
+      
+      
+        <link rel="next" href="../5-data-orchestration/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Section 4 — Improving Performance - Databricks Professional Certification Prep</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra-dev.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-4-improving-performance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Databricks Professional Certification Prep" class="md-header__button md-logo" aria-label="Databricks Professional Certification Prep" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Databricks Professional Certification Prep
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Section 4 — Improving Performance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Databricks Professional Certification Prep" class="md-nav__button md-logo" aria-label="Databricks Professional Certification Prep" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Databricks Professional Certification Prep
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-data-modeling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 2 — Data Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 3 — Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 4 — Improving Performance
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 4 — Improving Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#python-udfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python UDFs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vectorization-with-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vectorization with Pandas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Concepts
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-data-orchestration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 5 — Data Orchestration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-data-governance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 6 — Data Governance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-dlt-pipelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 7 — Delta Live Tables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-testing-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 8 — Testing & Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#python-udfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python UDFs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vectorization-with-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vectorization with Pandas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Concepts
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="section-4-improving-performance">Section 4 — Improving Performance<a class="headerlink" href="#section-4-improving-performance" title="Permanent link">&para;</a></h1>
+<p>Quick-reference tables for Python UDFs, vectorization, and performance optimization.</p>
+<hr />
+<h2 id="python-udfs">Python UDFs<a class="headerlink" href="#python-udfs" title="Permanent link">&para;</a></h2>
+<details class="note">
+<summary>UDF Types and Registration</summary>
+<table>
+<thead>
+<tr>
+<th>UDF Type</th>
+<th>Code/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Standard UDF</strong></td>
+<td><code>udf(func)</code> or <code>spark.udf.register("name", func)</code></td>
+<td>Python UDF (row-by-row)</td>
+<td>Slow due to serialization overhead</td>
+</tr>
+<tr>
+<td><strong>Decorator UDF</strong></td>
+<td><code>@udf("returnType")</code></td>
+<td>Define UDF with decorator</td>
+<td>Type must be specified as string</td>
+</tr>
+<tr>
+<td><strong>Pandas UDF (Vectorized)</strong></td>
+<td><code>@pandas_udf("returnType")</code></td>
+<td>Vectorized operations</td>
+<td>Much faster than standard UDFs</td>
+</tr>
+<tr>
+<td><strong>Register for SQL</strong></td>
+<td><code>spark.udf.register("sql_name", udf_func)</code></td>
+<td>Use UDF in SQL queries</td>
+<td>Available in <code>%sql</code> cells</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>UDF Performance Patterns</summary>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Code/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Standard Python UDF</strong></td>
+<td><code>def func(x): return x * 2</code> then <code>udf(func)</code></td>
+<td>Simple row-by-row logic</td>
+<td>Serializes data to Python process</td>
+</tr>
+<tr>
+<td><strong>Pandas UDF Series</strong></td>
+<td><code>def func(s: pd.Series) -&gt; pd.Series: return s * 2</code></td>
+<td>Vectorized column operations</td>
+<td>Processes batches with Pandas</td>
+</tr>
+<tr>
+<td><strong>Apply UDF</strong></td>
+<td><code>df.select(my_udf(col("price"), lit(50)))</code></td>
+<td>Use in DataFrame API</td>
+<td>Can combine with <code>lit()</code> for constants</td>
+</tr>
+<tr>
+<td><strong>SQL UDF Usage</strong></td>
+<td><code>SELECT my_udf(price, 50) FROM table</code></td>
+<td>Use in SQL context</td>
+<td>Must register with <code>spark.udf.register()</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>UDF Best Practices</summary>
+<table>
+<thead>
+<tr>
+<th>Practice</th>
+<th>Code/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prefer Built-in Functions</strong></td>
+<td>Use <code>F.when()</code>, <code>F.coalesce()</code>, etc.</td>
+<td>Native Spark functions</td>
+<td>Always faster than UDFs</td>
+</tr>
+<tr>
+<td><strong>Use Pandas UDF</strong></td>
+<td><code>@pandas_udf("double")</code></td>
+<td>When UDF is necessary</td>
+<td>10-100x faster than standard UDF</td>
+</tr>
+<tr>
+<td><strong>Type Hints</strong></td>
+<td><code>def func(x: pd.Series) -&gt; pd.Series</code></td>
+<td>Pandas UDF type safety</td>
+<td>Required for Pandas UDFs</td>
+</tr>
+<tr>
+<td><strong>Avoid Complex Logic</strong></td>
+<td>Keep UDF simple</td>
+<td>Minimize computation</td>
+<td>Consider breaking into steps</td>
+</tr>
+<tr>
+<td><strong>Test Performance</strong></td>
+<td>Compare with <code>.explain()</code> and timing</td>
+<td>Measure impact</td>
+<td>Standard UDFs create extra stages</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr />
+<h2 id="vectorization-with-pandas">Vectorization with Pandas<a class="headerlink" href="#vectorization-with-pandas" title="Permanent link">&para;</a></h2>
+<details class="note">
+<summary>Pandas UDF Patterns</summary>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Code/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scalar Pandas UDF</strong></td>
+<td><code>@pandas_udf("double") def f(s: pd.Series) -&gt; pd.Series</code></td>
+<td>Column transformation</td>
+<td>Most common pattern</td>
+</tr>
+<tr>
+<td><strong>Grouped Map</strong></td>
+<td><code>@pandas_udf(..., functionType=PandasUDFType.GROUPED_MAP)</code></td>
+<td>Group-level operations</td>
+<td>Deprecated in Spark 3.0+</td>
+</tr>
+<tr>
+<td><strong>Apply in Pandas</strong></td>
+<td><code>df.groupBy("key").applyInPandas(func, schema)</code></td>
+<td>Custom group processing</td>
+<td>Modern alternative to GROUPED_MAP</td>
+</tr>
+<tr>
+<td><strong>Map Iterator</strong></td>
+<td><code>df.mapInPandas(func, schema)</code></td>
+<td>Process batches</td>
+<td>Low memory overhead for large datasets</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="note">
+<summary>Performance Optimization</summary>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Code/Command</th>
+<th>Usage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cache</strong></td>
+<td><code>df.cache()</code> or <code>df.persist()</code></td>
+<td>Reuse DataFrame</td>
+<td>Use for iterative operations</td>
+</tr>
+<tr>
+<td><strong>Broadcast</strong></td>
+<td><code>F.broadcast(small_df)</code></td>
+<td>Small table joins</td>
+<td>Avoid shuffle for small tables</td>
+</tr>
+<tr>
+<td><strong>Repartition</strong></td>
+<td><code>df.repartition(n, "key")</code></td>
+<td>Control parallelism</td>
+<td>Use before expensive operations</td>
+</tr>
+<tr>
+<td><strong>Coalesce</strong></td>
+<td><code>df.coalesce(n)</code></td>
+<td>Reduce partitions</td>
+<td>Minimize output files</td>
+</tr>
+<tr>
+<td><strong>Predicate Pushdown</strong></td>
+<td><code>.filter()</code> early in chain</td>
+<td>Filter before joins</td>
+<td>Let Delta Lake skip files</td>
+</tr>
+<tr>
+<td><strong>Column Pruning</strong></td>
+<td><code>.select()</code> only needed columns</td>
+<td>Reduce data volume</td>
+<td>Especially important with wide tables</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr />
+<h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Standard UDFs</strong>: Row-by-row processing with high serialization overhead; avoid when possible</li>
+<li><strong>Pandas UDFs</strong>: Vectorized processing using Apache Arrow for fast data transfer; 10-100x faster than standard UDFs</li>
+<li><strong>Built-in Functions</strong>: Always prefer native Spark functions (<code>pyspark.sql.functions</code>) over UDFs</li>
+<li><strong>Type Safety</strong>: Pandas UDFs require explicit type hints and return type specifications</li>
+<li><strong>Registration</strong>: UDFs must be registered with <code>spark.udf.register()</code> to be used in SQL</li>
+<li><strong>Performance</strong>: Minimize data movement, use broadcast joins, filter early, and select only needed columns</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
