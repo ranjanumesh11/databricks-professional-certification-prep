@@ -727,24 +727,24 @@
 <h2 id="1-high-level-concepts-by-area-short-bullets">1) High-level concepts (by area) — short bullets<a class="headerlink" href="#1-high-level-concepts-by-area-short-bullets" title="Permanent link">&para;</a></h2>
 <h3 id="databricks-specific">Databricks-specific<a class="headerlink" href="#databricks-specific" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Autoloader (cloudFiles): incremental file ingestion for cloud storage (used to stream JSON files into Bronze). Doc: https://docs.databricks.com/data-engineering/ingestion/auto-loader/index.html</li>
-<li><code>availableNow</code> trigger: bounded processing of all currently-available files (demo/backfill). Doc: https://docs.databricks.com/data-engineering/ingestion/auto-loader/cloud-files-trigger.html</li>
-<li>Databricks Volumes / Unity Catalog: managed storage and cataloging for datasets. Doc: https://docs.databricks.com/data-governance/unity-catalog/index.html</li>
-<li><code>dbutils.fs</code>: workspace filesystem utilities (ls, cp, rm). Doc: https://docs.databricks.com/dev-tools/databricks-utils.html</li>
+<li>Autoloader (cloudFiles): incremental file ingestion for cloud storage (used to stream JSON files into Bronze). <a href="https://docs.databricks.com/data-engineering/ingestion/auto-loader/index.html">Doc</a></li>
+<li><code>availableNow</code> trigger: bounded processing of all currently-available files (demo/backfill). <a href="https://docs.databricks.com/data-engineering/ingestion/auto-loader/cloud-files-trigger.html">Doc</a></li>
+<li>Databricks Volumes / Unity Catalog: managed storage and cataloging for datasets. <a href="https://docs.databricks.com/data-governance/unity-catalog/index.html">Doc</a></li>
+<li><code>dbutils.fs</code>: workspace filesystem utilities (ls, cp, rm). <a href="https://docs.databricks.com/dev-tools/databricks-utils.html">Doc</a></li>
 </ul>
 <h3 id="spark-pyspark">Spark / PySpark<a class="headerlink" href="#spark-pyspark" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Structured Streaming: <code>readStream</code> / <code>writeStream</code>, watermarking, triggers, <code>foreachBatch</code>. Docs: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html</li>
-<li>DataFrame APIs: <code>from_json</code>, <code>withColumn</code>, <code>cast</code>, <code>date_format</code>, <code>dropDuplicates</code>, <code>withWatermark</code>. Docs: https://spark.apache.org/docs/latest/api/python/</li>
-<li>Window functions and broadcast joins for dedup/enrichment. Docs: https://spark.apache.org/docs/latest/api/python/</li>
+<li>Structured Streaming: <code>readStream</code> / <code>writeStream</code>, watermarking, triggers, <code>foreachBatch</code>. <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">Docs</a></li>
+<li>DataFrame APIs: <code>from_json</code>, <code>withColumn</code>, <code>cast</code>, <code>date_format</code>, <code>dropDuplicates</code>, <code>withWatermark</code>. <a href="https://spark.apache.org/docs/latest/api/python/">Docs</a></li>
+<li>Window functions and broadcast joins for dedup/enrichment. <a href="https://spark.apache.org/docs/latest/api/python/">Docs</a></li>
 </ul>
 <h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Core language constructs used: classes (<code>__init__</code>, <code>self</code>), lists/dicts/sets, f-strings, try/except, helper functions. Python stdlib reference: https://docs.python.org/3/library/stdtypes.html</li>
+<li>Core language constructs used: classes (<code>__init__</code>, <code>self</code>), lists/dicts/sets, f-strings, try/except, helper functions. <a href="https://docs.python.org/3/library/stdtypes.html">Python stdlib reference</a></li>
 </ul>
 <h3 id="sql-delta">SQL / Delta<a class="headerlink" href="#sql-delta" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Delta Lake <code>MERGE</code> for upserts and Type-2 SCD patterns. Docs: https://docs.delta.io/latest/delta-update.html#merge</li>
+<li>Delta Lake <code>MERGE</code> for upserts and Type-2 SCD patterns. <a href="https://docs.delta.io/latest/delta-update.html#merge">Docs</a></li>
 <li>Managed Delta tables via <code>.table("name")</code> sink and <code>mergeSchema</code> option.</li>
 </ul>
 <hr />
@@ -945,13 +945,13 @@
 <hr />
 <h2 id="3-where-to-read-official-docs">3) Where to read (official docs)<a class="headerlink" href="#3-where-to-read-official-docs" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Databricks Autoloader: https://docs.databricks.com/data-engineering/ingestion/auto-loader/index.html</li>
-<li>Databricks <code>dbutils</code>: https://docs.databricks.com/dev-tools/databricks-utils.html</li>
-<li>Databricks Unity Catalog &amp; Volumes: https://docs.databricks.com/data-governance/unity-catalog/index.html</li>
-<li>Spark Structured Streaming guide: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html</li>
-<li>PySpark functions (from_json, date_format, etc): https://spark.apache.org/docs/latest/api/python/</li>
-<li>Delta Lake MERGE &amp; update patterns: https://docs.delta.io/latest/delta-update.html#merge</li>
-<li>Python stdlib (core types): https://docs.python.org/3/library/stdtypes.html</li>
+<li><a href="https://docs.databricks.com/data-engineering/ingestion/auto-loader/index.html">Databricks Autoloader</a></li>
+<li><a href="https://docs.databricks.com/dev-tools/databricks-utils.html">Databricks dbutils</a></li>
+<li><a href="https://docs.databricks.com/data-governance/unity-catalog/index.html">Databricks Unity Catalog &amp; Volumes</a></li>
+<li><a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">Spark Structured Streaming guide</a></li>
+<li><a href="https://spark.apache.org/docs/latest/api/python/">PySpark functions (from_json, date_format, etc)</a></li>
+<li><a href="https://docs.delta.io/latest/delta-update.html#merge">Delta Lake MERGE &amp; update patterns</a></li>
+<li><a href="https://docs.python.org/3/library/stdtypes.html">Python stdlib (core types)</a></li>
 </ul>
 <hr />
 <!-- Detailed notebook explanations follow (kept from original README) -->
