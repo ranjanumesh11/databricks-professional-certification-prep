@@ -26,30 +26,49 @@ Below are two concise reference sections followed by the detailed notebook expla
 
 ---
 
-## 2) Quick commands & syntax reference (course usage + useful extras)
+## 2) Quick commands & syntax reference (grouped by area)
 
-Notes: Column `Course usage` shows the exact syntax pattern used in the notebooks. Items marked `*` are extra options or variants useful for exams/work.
+Notes: To improve readability this section is split into small tables per area (Databricks, PySpark, SQL/Delta, Python). Items are numbered and options or sub-settings appear as indented sub-items (e.g. `1.1`).
 
-| Area | Command / Operator | Course usage (short) | Notes & extras |
-|---|---|---|---|
-| Databricks Autoloader | `spark.readStream.format("cloudFiles").option("cloudFiles.format","json").load(path)` | used to ingest `kafka-raw` -> streaming DF | *Extra:* `.option("cloudFiles.useNotifications","true")` for S3 event notifications * |
-| Databricks trigger | `.trigger(availableNow=True)` | used in `process_bronze()` to process available files and stop | *Extra:* `.trigger(processingTime='10 seconds')` for micro-batches |
-| Checkpointing | `.option("checkpointLocation", checkpoint_path)` | required on writeStream for progress tracking | ensure stable storage; use unique path per query |
-| Partitioning | `.partitionBy("topic","year_month")` | write partitioned Delta table | partitions improve read performance; avoid too many small partitions |
-| Delta write options | `.option("mergeSchema", True).table("bronze")` | allow schema evolution on sink | *Extra:* `.mode("append")`, `format("delta")` |
-| Spark streaming read | `spark.readStream.table("bronze")` | read Bronze as streaming source | can also use `format("delta")` + `.load(path)` |
-| JSON parsing | `F.from_json(F.col("value").cast("string"), json_schema)` | parse message payloads into struct | `from_json` returns Struct; use `.select("v.*")` to expand |
-| Timestamp handling | `.withColumn("timestamp", (F.col("timestamp")/1000).cast("timestamp"))` | convert epoch ms -> timestamp | or use `to_timestamp` on string values |
-| Partition key | `F.date_format("timestamp","yyyy-MM")` | derive `year_month` partition column | common for time-partitioning |
-| Watermarking | `.withWatermark("order_timestamp","30 seconds")` | used for dedup state cleanup | choose watermark based on expected lateness * |
-| Deduplication | `.dropDuplicates(["order_id","order_timestamp"])` | remove duplicates in stream (with watermark) | `dropDuplicates` is stateful; watch memory |
-| foreachBatch | `.writeStream.foreachBatch(func).option("checkpointLocation", ...).start()` | used to call upsert functions per micro-batch | `func(microBatchDF, batchId)` — use `MERGE` inside func |
-| MERGE (Delta) | `MERGE INTO target USING source ON <cond> WHEN MATCHED THEN UPDATE ... WHEN NOT MATCHED THEN INSERT ...` | used for upserts & Type-2 SCD | Delta support for `MERGE` SQL; mark as essential for exam |
-| dbutils | `dbutils.fs.ls(path)`, `dbutils.fs.cp(src,dst)`, `dbutils.fs.rm(path, True)` | copy and list dataset files (Copy-Datasets uses these) | DBFS vs `/Volumes/...` behavior differs by catalog |
-| Spark actions | `df.collect()` / `df.first()` / `df.take(n)` | used to read small results to driver (e.g., `current_catalog()`) | Prefer `first()` / `take(1)` over `collect()` for single-row reads |
-| Window & rank | `Window.partitionBy(...).orderBy(F.col(...).desc())` and `F.rank()` | used in `upsert_customers_batch` for latest row selection | Window functions are powerful for dedupe & SCD logic |
-| Broadcast join | `F.broadcast(df_small)` | used to enrich customers with country lookup | use for small static tables to avoid shuffle |
-| Python basics | `class`, `__init__`, `self`, `list.append()`, `dict` | `Copy-Datasets` creates `CourseDataset` instance and calls methods | `__init__` initializes attributes; avoid heavy I/O in constructor |
+### Databricks (1)
+
+| Item | Command / Operator | Course usage (short) | Notes & extras |
+|---:|---|---|---|
+| 1 — Autoloader | `spark.readStream.format("cloudFiles").option("cloudFiles.format","json").load(path)` | used to ingest `kafka-raw` -> streaming DF | Extra options listed below (1.1, 1.2) |
+| 1.1 — Autoloader option | `.option("cloudFiles.format","json")` | specify payload format | common: `json`, `parquet`, `csv` |
+| 1.2 — Autoloader notifications* | `.option("cloudFiles.useNotifications","true")` | use S3 notifications to lower list cost | *Requires configuration of cloud events |
+| 2 — Trigger | `.trigger(availableNow=True)` | used in `process_bronze()` to process available files and stop | Alternative: `.trigger(processingTime='10 seconds')` |
+| 3 — Checkpointing | `.option("checkpointLocation", checkpoint_path)` | required on writeStream for progress tracking | ensure stable storage; use unique path per query |
+| 4 — Partitioning (write) | `.partitionBy("topic","year_month")` | write partitioned Delta table | partitions improve read performance; avoid small partitions |
+| 5 — Delta write options | `.option("mergeSchema", True).table("bronze")` | allow schema evolution on sink | Extra: `.mode("append")`, `format("delta")` |
+| 6 — dbutils helpers | `dbutils.fs.ls(path)`, `dbutils.fs.cp(src,dst)`, `dbutils.fs.rm(path, True)` | copy and list dataset files (Copy-Datasets uses these) | DBFS vs `/Volumes/...` differences by catalog |
+
+### Spark / PySpark (2)
+
+| Item | Command / Operator | Course usage (short) | Notes & extras |
+|---:|---|---|---|
+| 2.1 — Streaming read | `spark.readStream.table("bronze")` | read Bronze as streaming source | can also use `format("delta")` + `.load(path)` |
+| 2.2 — JSON parsing | `F.from_json(F.col("value").cast("string"), json_schema)` | parse message payloads into struct | `from_json` returns Struct; use `.select("v.*")` to expand |
+| 2.3 — Timestamp handling | `.withColumn("timestamp", (F.col("timestamp")/1000).cast("timestamp"))` | convert epoch ms -> timestamp | or use `to_timestamp` on string values |
+| 2.4 — Partition key | `F.date_format("timestamp","yyyy-MM")` | derive `year_month` partition column | common for time-partitioning |
+| 2.5 — Watermarking | `.withWatermark("order_timestamp","30 seconds")` | used for dedup state cleanup | choose watermark based on expected lateness |
+| 2.6 — Deduplication | `.dropDuplicates(["order_id","order_timestamp"])` | remove duplicates in stream (with watermark) | `dropDuplicates` is stateful; watch memory |
+| 2.7 — foreachBatch | `.writeStream.foreachBatch(func).option("checkpointLocation", ...).start()` | used to call upsert functions per micro-batch | `func(microBatchDF, batchId)` — use `MERGE` inside func |
+| 2.8 — Window & rank | `Window.partitionBy(...).orderBy(F.col(...).desc())` and `F.rank()` | used in `upsert_customers_batch` for latest row selection | Window functions are powerful for dedupe & SCD logic |
+| 2.9 — Broadcast join | `F.broadcast(df_small)` | used to enrich customers with country lookup | use for small static tables to avoid shuffle |
+| 2.10 — Spark actions | `df.collect()` / `df.first()` / `df.take(n)` | used to read small results to driver | Prefer `first()` / `take(1)` over `collect()` for single-row reads |
+
+### SQL / Delta (3)
+
+| Item | Command / Operator | Course usage (short) | Notes & extras |
+|---:|---|---|---|
+| 3.1 — MERGE (Delta) | `MERGE INTO target USING source ON <cond> WHEN MATCHED THEN UPDATE ... WHEN NOT MATCHED THEN INSERT ...` | used for upserts & Type-2 SCD | Delta support for `MERGE` SQL; essential for exam |
+
+### Python (4)
+
+| Item | Command / Operator | Course usage (short) | Notes & extras |
+|---:|---|---|---|
+| 4.1 — Basics | `class`, `__init__`, `self`, `list.append()`, `dict` | `Copy-Datasets` creates `CourseDataset` instance and calls methods | `__init__` initializes attributes; avoid heavy I/O in constructor |
 
 ---
 
