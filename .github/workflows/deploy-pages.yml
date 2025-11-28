@@ -30,11 +30,21 @@ jobs:
         run: |
           mkdocs build -d site
 
+      - name: Prepare publish folder for Pages (wrap site into docs/)
+        run: |
+          rm -rf deploy_target
+          mkdir -p deploy_target/docs
+          # move site contents into deploy_target/docs (preserve hidden files)
+          shopt -s dotglob || true
+          mv site/* deploy_target/docs/ || true
+          # ensure index exists
+          ls -la deploy_target || true
+
       - name: Deploy to gh-pages (peaceiris)
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          publish_dir: ./deploy_target
           publish_branch: gh-pages
           # exclude the GitHub Actions config when publishing
           exclude_assets: .github
