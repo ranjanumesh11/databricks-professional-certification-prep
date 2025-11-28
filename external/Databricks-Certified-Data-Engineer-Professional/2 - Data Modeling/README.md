@@ -30,7 +30,8 @@ Below are two concise reference sections followed by the detailed notebook expla
 
 Notes: To improve readability this section is split into small tables per area (Databricks, PySpark, SQL/Delta, Python). Items are numbered and options or sub-settings appear as indented sub-items (e.g. `1.1`).
 
-### Databricks (1)
+<details>
+<summary><strong>Databricks (1) — click to expand</strong></summary>
 
 | Item | Command / Operator | Course usage (short) | Notes & extras |
 |---:|---|---|---|
@@ -43,7 +44,26 @@ Notes: To improve readability this section is split into small tables per area (
 | 5 — Delta write options | `.option("mergeSchema", True).table("bronze")` | allow schema evolution on sink | Extra: `.mode("append")`, `format("delta")` |
 | 6 — dbutils helpers | `dbutils.fs.ls(path)`, `dbutils.fs.cp(src,dst)`, `dbutils.fs.rm(path, True)` | copy and list dataset files (Copy-Datasets uses these) | DBFS vs `/Volumes/...` differences by catalog |
 
-### Spark / PySpark (2)
+#### Short Autoloader example
+
+```python
+# Autoloader: read JSON files incrementally from cloud storage
+autoloader_df = (spark.readStream
+	.format("cloudFiles")
+	.option("cloudFiles.format", "json")
+	.schema("key BINARY, value BINARY, topic STRING, partition LONG, offset LONG, timestamp LONG")
+	.load(f"{bookstore.dataset_path}/kafka-raw")
+)
+
+# Cast value to string and parse later with from_json in downstream processing
+autoloader_df.select("topic", autoloader_df.value.cast("string").alias("value_text")).show(5)
+```
+
+</details>
+
+
+<details>
+<summary><strong>Spark / PySpark (2) — click to expand</strong></summary>
 
 | Item | Command / Operator | Course usage (short) | Notes & extras |
 |---:|---|---|---|
@@ -58,17 +78,26 @@ Notes: To improve readability this section is split into small tables per area (
 | 2.9 — Broadcast join | `F.broadcast(df_small)` | used to enrich customers with country lookup | use for small static tables to avoid shuffle |
 | 2.10 — Spark actions | `df.collect()` / `df.first()` / `df.take(n)` | used to read small results to driver | Prefer `first()` / `take(1)` over `collect()` for single-row reads |
 
-### SQL / Delta (3)
+</details>
+
+
+<details>
+<summary><strong>SQL / Delta (3) — click to expand</strong></summary>
 
 | Item | Command / Operator | Course usage (short) | Notes & extras |
 |---:|---|---|---|
 | 3.1 — MERGE (Delta) | `MERGE INTO target USING source ON <cond> WHEN MATCHED THEN UPDATE ... WHEN NOT MATCHED THEN INSERT ...` | used for upserts & Type-2 SCD | Delta support for `MERGE` SQL; essential for exam |
 
-### Python (4)
+</details>
+
+<details>
+<summary><strong>Python (4) — click to expand</strong></summary>
 
 | Item | Command / Operator | Course usage (short) | Notes & extras |
 |---:|---|---|---|
 | 4.1 — Basics | `class`, `__init__`, `self`, `list.append()`, `dict` | `Copy-Datasets` creates `CourseDataset` instance and calls methods | `__init__` initializes attributes; avoid heavy I/O in constructor |
+
+</details>
 
 ---
 
