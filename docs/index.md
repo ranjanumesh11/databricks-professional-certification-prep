@@ -1,17 +1,11 @@
 # databricks-professional-certification-prep docs
 
-Welcome — this minimal docs site mirrors selected README content from the repository and provides quick links.
+# Exam Review Notes — Welcome
 
-- **Section 2 — Data Modeling**: https://github.com/ranjanumesh11/databricks-professional-certification-prep/blob/main/external/Databricks-Certified-Data-Engineer-Professional/2%20-%20Data%20Modeling/README.md
-- Local docs page: `2-data-modeling.md` (below)
+Welcome! This repository hosts concise study materials for the Databricks Professional Certification.
 
----
+- **Exam Review Notes**: [Open the published study notes (prod)](/prod/)
 
-## Local pages
+If you want a staging/staging preview, view the `/dev/` site instead: [Dev preview](/dev/)
 
-- [2 — Data Modeling](./2-data-modeling.md)
-
-
----
-
-Site generated from repository content. To publish this site visit the repository Settings → Pages and select the `main` branch `/docs` folder as the source (or let the workflow deploy automatically).
+This landing page intentionally keeps content minimal and points contributors/readers to the published study notes.
