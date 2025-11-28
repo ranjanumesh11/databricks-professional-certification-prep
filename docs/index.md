@@ -4,8 +4,8 @@
 
 Welcome! This repository hosts concise study materials for the Databricks Professional Certification.
 
-- **Exam Review Notes**: [Open the published study notes (prod)](/prod/)
+- **[Exam Review Notes](prod/)** — Open the published study notes
 
-If you want a staging/staging preview, view the `/dev/` site instead: [Dev preview](/dev/)
+For a staging preview, view the dev site: [Dev preview](dev/)
 
 This landing page intentionally keeps content minimal and points contributors/readers to the published study notes.
