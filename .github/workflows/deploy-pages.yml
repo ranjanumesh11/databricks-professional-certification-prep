@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages (gh-pages branch)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
   deploy:
@@ -30,21 +30,48 @@ jobs:
         run: |
           mkdocs build -d site
 
-      - name: Prepare publish folder for Pages (wrap site into docs/)
+      - name: Set publish subpath (prod/dev)
         run: |
-          rm -rf deploy_target
-          mkdir -p deploy_target/docs
-          # move site contents into deploy_target/docs (preserve hidden files)
-          shopt -s dotglob || true
-          mv site/* deploy_target/docs/ || true
-          # ensure index exists
-          ls -la deploy_target || true
+          BRANCH_NAME=${GITHUB_REF##*/}
+          if [ "$BRANCH_NAME" = "main" ]; then
+            echo "PUBLISH_SUBPATH=prod" >> $GITHUB_ENV
+          else
+            echo "PUBLISH_SUBPATH=dev" >> $GITHUB_ENV
+          fi
 
-      - name: Deploy to gh-pages (peaceiris)
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Checkout gh-pages branch for update
+        uses: actions/checkout@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./deploy_target
-          publish_branch: gh-pages
-          # exclude the GitHub Actions config when publishing
-          exclude_assets: .github
+          ref: gh-pages
+          path: ghpages
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Update gh-pages docs subfolder
+        run: |
+          set -e
+          mkdir -p ghpages/docs
+          # remove old content for this environment
+          rm -rf ghpages/docs/${PUBLISH_SUBPATH} || true
+          mkdir -p ghpages/docs/${PUBLISH_SUBPATH}
+          # move generated site into the environment subfolder
+          shopt -s dotglob || true
+          mv site/* ghpages/docs/${PUBLISH_SUBPATH}/ || true
+          # ensure .nojekyll present to disable Jekyll for the docs folder
+          touch ghpages/docs/.nojekyll
+          ls -la ghpages/docs || true
+
+      - name: Commit and push gh-pages updates
+        working-directory: ghpages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to deploy"
+          else
+            git commit -m "ci(pages): update ${PUBLISH_SUBPATH} site from ${GITHUB_REF##*/}"
+            git push origin gh-pages
+          fi
